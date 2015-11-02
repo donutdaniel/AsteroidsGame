@@ -1,15 +1,74 @@
-//your variable declarations here
+SpaceShip poop;
 public void setup() 
 {
-  //your code here
+  size(1000, 1000);
+  poop = new SpaceShip();
 }
 public void draw() 
 {
-  //your code here
+  background(0);
+  poop.move();
+  poop.show();
 }
-class SpaceShip //extends Floater  
-{   
-    //your code here
+public void keyPressed() {
+  if (key=='a')
+    poop.rotate(-10);
+  if (key=='d')
+    poop.rotate(10);
+  if (key=='s')
+    poop.accelerate(-0.5);
+  if (key=='w')
+    poop.accelerate(0.5);
+  if (key=='h') {
+    poop.setX((int)(Math.random()*1001));
+    poop.setY((int)(Math.random()*1001));
+    poop.setPointDirection((int)(Math.random()*361));
+  }
+}
+
+class SpaceShip extends Floater
+{  
+    public SpaceShip() {
+      corners = 4;
+      int[] xS = {-8,16,-8,-2};
+      int[] yS = {-8,0,8,0};
+      xCorners = xS;
+      yCorners = yS;
+      myColor = 225;
+      myCenterX = 500;
+      myCenterY = 500;
+      myDirectionX = 0;
+    }
+    public void setX (int x){
+      myCenterX=x;
+    }
+    public int getX(){
+      return (int)(myCenterX);
+    }
+    public void setY (int y){
+      myCenterY=y;
+    }
+    public int getY(){
+      return (int)(myCenterY);
+    }
+    public void setDirectionX(double x){
+      myDirectionX=x;
+    }
+    public double getDirectionX(){
+      return myDirectionX;
+    }
+    public void setDirectionY(double y){
+      myDirectionY=y;
+    }
+    public double getDirectionY(){
+      return myDirectionY;
+    }
+    public void setPointDirection(int degrees){
+      myPointDirection=degrees;
+    }
+    public double getPointDirection(){
+      return myPointDirection;
+    }
 }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
@@ -40,12 +99,12 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     myDirectionX += ((dAmount) * Math.cos(dRadians));    
     myDirectionY += ((dAmount) * Math.sin(dRadians));       
   }   
-  public void rotate (int nDegreesOfRotation)   
+  public void rotate (int nDegreesOfRotation)  
   {     
     //rotates the floater by a given number of degrees    
     myPointDirection+=nDegreesOfRotation;   
   }   
-  public void move ()   //move the floater in the current direction of travel
+  public void move () //move the floater in the current direction of travel
   {      
     //change the x and y coordinates by myDirectionX and myDirectionY       
     myCenterX += myDirectionX;    
