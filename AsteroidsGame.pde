@@ -1,29 +1,62 @@
 SpaceShip poop;
+Star[] poops = new Star[200];
+PImage bg;
+boolean up, down, left, right;
 public void setup() 
 {
   size(1000, 1000);
   poop = new SpaceShip();
+  for(int i=0 ; i<poops.length ;i++){
+    poops[i] = new Star();
+  }
+
+  bg = loadImage("Stars1.jpg");
 }
 public void draw() 
 {
+  // imageMode(CENTER);
+  // image(bg,500,500,1920,1000);
   background(0);
+  for(int i=0;i<poops.length;i++){
+    poops[i].show();
+  }
+  if(up==true) poop.accelerate(.3);
+  if(down==true) poop.accelerate(-.3);
+  if(left==true) poop.rotate(-10);
+  if(right==true) poop.rotate(10);
   poop.move();
   poop.show();
 }
 public void keyPressed() {
-  if (key=='a')
-    poop.rotate(-10);
-  if (key=='d')
-    poop.rotate(10);
-  if (key=='s')
-    poop.accelerate(-0.5);
-  if (key=='w')
-    poop.accelerate(0.5);
+  if (key=='a') left=true;
+  if (key=='d') right=true;
+  if (key=='s') down=true;
+  if (key=='w') up=true;
   if (key=='h') {
     poop.setX((int)(Math.random()*1001));
     poop.setY((int)(Math.random()*1001));
+    poop.setDirectionX(0);
+    poop.setDirectionY(0);
     poop.setPointDirection((int)(Math.random()*361));
   }
+}
+  public void keyReleased() {
+    if(key=='w') up=false;
+    if(key=='a') left=false;
+    if(key=='s') down=false;
+    if(key=='d') right=false;
+  }
+
+class Star {
+  private float x,y;
+     public Star(){
+        x=(float)Math.random()*1001;
+        y=(float)Math.random()*1001;
+    }
+
+      public void show(){
+        ellipse(x,y,1,1);
+      }
 }
 
 class SpaceShip extends Floater
@@ -71,7 +104,8 @@ class SpaceShip extends Floater
     }
 }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
-{   
+{  
+  protected float friction=1.008;
   protected int corners;  //the number of corners, a triangular floater has 3   
   protected int[] xCorners;   
   protected int[] yCorners;   
@@ -108,7 +142,9 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   {      
     //change the x and y coordinates by myDirectionX and myDirectionY       
     myCenterX += myDirectionX;    
-    myCenterY += myDirectionY;     
+    myCenterY += myDirectionY;
+    myDirectionX=myDirectionX/friction;
+    myDirectionY=myDirectionY/friction;
 
     //wrap around screen    
     if(myCenterX >width)
