@@ -14,9 +14,9 @@ public void setup()
 }
 public void draw() 
 {
-  // imageMode(CENTER);
-  // image(bg,500,500,1920,1000);
-  background(0);
+  imageMode(CENTER);
+  image(bg,500,500,1920,1000);
+  //background(0);
   for(int i=0;i<poops.length;i++){
     poops[i].show();
   }
