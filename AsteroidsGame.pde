@@ -1,5 +1,7 @@
 SpaceShip poop;
 Star[] poops = new Star[200];
+Asteroids[] pooped = new Asteroids[15];
+
 PImage bg;
 boolean up, down, left, right;
 public void setup() 
@@ -8,6 +10,9 @@ public void setup()
   poop = new SpaceShip();
   for(int i=0 ; i<poops.length ;i++){
     poops[i] = new Star();
+  }
+  for(int i=0 ; i<pooped.length ; i++){
+    pooped[i] = new Asteroids();
   }
 
   bg = loadImage("Stars1.jpg");
@@ -19,6 +24,11 @@ public void draw()
   //background(0);
   for(int i=0;i<poops.length;i++){
     poops[i].show();
+  }
+
+  for(int i=0 ; i<pooped.length ; i++){
+    pooped[i].move();
+    pooped[i].show();
   }
   if(up==true) poop.accelerate(.3);
   if(down==true) poop.accelerate(-.3);
@@ -57,6 +67,50 @@ class Star {
       public void show(){
         ellipse(x,y,1,1);
       }
+}
+
+class Asteroids extends SpaceShip
+{
+    public Asteroids(){
+      corners=6;
+      int[] xA = {-11,7,13,6,-11,-5};
+      int[] yA = {-8,-8,0,10,8,0};
+      xCorners = xA;
+      yCorners = yA;
+      myColor = 135;
+      myCenterX = (double)Math.random()*1001;
+      myCenterY = (double)Math.random()*1001;
+      myDirectionX = (double)(Math.random()*9)-4;
+      myDirectionY = (double)(Math.random()*9)-4;
+      myPointDirection= (double)(Math.random()*361);
+    }
+
+    public void move(){
+      rotate((int)(Math.random()*15));
+       //change the x and y coordinates by myDirectionX and myDirectionY       
+    myCenterX += myDirectionX;    
+    myCenterY += myDirectionY;
+    myDirectionX=myDirectionX;
+    myDirectionY=myDirectionY;
+
+    //wrap around screen    
+    if(myCenterX >width)
+    {     
+      myCenterX = 0;    
+    }    
+    else if (myCenterX<0)
+    {     
+      myCenterX = width;    
+    }    
+    if(myCenterY >height)
+    {    
+      myCenterY = 0;    
+    }   
+    else if (myCenterY < 0)
+    {     
+      myCenterY = height;    
+    }   
+    }
 }
 
 class SpaceShip extends Floater
@@ -102,6 +156,33 @@ class SpaceShip extends Floater
     public double getPointDirection(){
       return myPointDirection;
     }
+
+      public void move () //move the floater in the current direction of travel
+  {      
+    //change the x and y coordinates by myDirectionX and myDirectionY       
+    myCenterX += myDirectionX;    
+    myCenterY += myDirectionY;
+    myDirectionX=myDirectionX/friction;
+    myDirectionY=myDirectionY/friction;
+
+    //wrap around screen    
+    if(myCenterX >width)
+    {     
+      myCenterX = 0;    
+    }    
+    else if (myCenterX<0)
+    {     
+      myCenterX = width;    
+    }    
+    if(myCenterY >height)
+    {    
+      myCenterY = 0;    
+    }   
+    else if (myCenterY < 0)
+    {     
+      myCenterY = height;    
+    }   
+  }   
 }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {  
@@ -143,8 +224,8 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     //change the x and y coordinates by myDirectionX and myDirectionY       
     myCenterX += myDirectionX;    
     myCenterY += myDirectionY;
-    myDirectionX=myDirectionX/friction;
-    myDirectionY=myDirectionY/friction;
+    myDirectionX=myDirectionX;
+    myDirectionY=myDirectionY;
 
     //wrap around screen    
     if(myCenterX >width)
