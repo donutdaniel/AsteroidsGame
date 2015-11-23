@@ -75,15 +75,15 @@ class Asteroids extends Floater
       corners=6;
       // int[] xA = {-11,7,13,6,-11,-5};
       // int[] yA = {-8,-8,0,10,8,0};
-      int[] xA = {(int)(Math.random()*16)-40,(int)(Math.random()*16)+25,(int)(Math.random()*11)+30,(int)(Math.random()*16)+25,(int)(Math.random()*16)-40,(int)(Math.random()*11)-50};
-      int[] yA = {(int)(Math.random()*16)-40,(int)(Math.random()*16)-40,0,(int)(Math.random()*16)+25,(int)(Math.random()*16)+25,0};
+      int[] xA = {(int)(Math.random()*16)-30,(int)(Math.random()*16)+15,(int)(Math.random()*11)+20,(int)(Math.random()*16)+15,(int)(Math.random()*16)-30,(int)(Math.random()*11)-40};
+      int[] yA = {(int)(Math.random()*16)-30,(int)(Math.random()*16)-30,0,(int)(Math.random()*16)+15,(int)(Math.random()*16)+15,0};
       xCorners = xA;
       yCorners = yA;
       myColor = 135;
       myCenterX = (double)Math.random()*1001;
       myCenterY = (double)Math.random()*1001;
-      myDirectionX = (double)(Math.random()*9)-4;
-      myDirectionY = (double)(Math.random()*9)-4;
+      myDirectionX = (double)(Math.random()*7)-3;
+      myDirectionY = (double)(Math.random()*7)-3;
       myPointDirection= (double)(Math.random()*361);
     }
     public void setX (int x){
