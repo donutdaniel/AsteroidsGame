@@ -69,12 +69,14 @@ class Star {
       }
 }
 
-class Asteroids extends SpaceShip
+class Asteroids extends Floater
 {
     public Asteroids(){
       corners=6;
-      int[] xA = {-11,7,13,6,-11,-5};
-      int[] yA = {-8,-8,0,10,8,0};
+      // int[] xA = {-11,7,13,6,-11,-5};
+      // int[] yA = {-8,-8,0,10,8,0};
+      int[] xA = {(int)(Math.random()*16)-40,(int)(Math.random()*16)+25,(int)(Math.random()*11)+30,(int)(Math.random()*16)+25,(int)(Math.random()*16)-40,(int)(Math.random()*11)-50};
+      int[] yA = {(int)(Math.random()*16)-40,(int)(Math.random()*16)-40,0,(int)(Math.random()*16)+25,(int)(Math.random()*16)+25,0};
       xCorners = xA;
       yCorners = yA;
       myColor = 135;
@@ -84,32 +86,39 @@ class Asteroids extends SpaceShip
       myDirectionY = (double)(Math.random()*9)-4;
       myPointDirection= (double)(Math.random()*361);
     }
-
+    public void setX (int x){
+      myCenterX=x;
+    }
+    public int getX(){
+      return (int)(myCenterX);
+    }
+    public void setY (int y){
+      myCenterY=y;
+    }
+    public int getY(){
+      return (int)(myCenterY);
+    }
+    public void setDirectionX(double x){
+      myDirectionX=x;
+    }
+    public double getDirectionX(){
+      return myDirectionX;
+    }
+    public void setDirectionY(double y){
+      myDirectionY=y;
+    }
+    public double getDirectionY(){
+      return myDirectionY;
+    }
+    public void setPointDirection(int degrees){
+      myPointDirection=degrees;
+    }
+    public double getPointDirection(){
+      return myPointDirection;
+    }
     public void move(){
       rotate((int)(Math.random()*15));
-       //change the x and y coordinates by myDirectionX and myDirectionY       
-    myCenterX += myDirectionX;    
-    myCenterY += myDirectionY;
-    myDirectionX=myDirectionX;
-    myDirectionY=myDirectionY;
-
-    //wrap around screen    
-    if(myCenterX >width)
-    {     
-      myCenterX = 0;    
-    }    
-    else if (myCenterX<0)
-    {     
-      myCenterX = width;    
-    }    
-    if(myCenterY >height)
-    {    
-      myCenterY = 0;    
-    }   
-    else if (myCenterY < 0)
-    {     
-      myCenterY = height;    
-    }   
+      super.move();  
     }
 }
 
@@ -184,6 +193,8 @@ class SpaceShip extends Floater
     }   
   }   
 }
+
+
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {  
   protected float friction=1.008;
