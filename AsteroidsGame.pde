@@ -21,7 +21,7 @@ public void draw()
 {
   imageMode(CENTER);
   image(bg,600,450,1920,1000);
-  //background(0);
+  // background(0);
   for(int i=0;i<poops.length;i++){
     poops[i].show();
   }
@@ -127,7 +127,7 @@ class Asteroids extends Floater
       myDirectionX = (double)(Math.random()*5)-2;
       myDirectionY = (double)(Math.random()*5)-2;
       myPointDirection= (double)(Math.random()*361);
-      rotate1=(int)(Math.random()*11);
+      rotate1=(int)(Math.random()*7);
     }
     public void setX (int x){
       myCenterX=x;
