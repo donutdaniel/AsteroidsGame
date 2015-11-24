@@ -1,12 +1,12 @@
 SpaceShip poop;
 Star[] poops = new Star[200];
-Asteroids[] pooped = new Asteroids[15];
+Asteroids[] pooped = new Asteroids[20];
 
 PImage bg;
 boolean up, down, left, right;
 public void setup() 
 {
-  size(1000, 1000);
+  size(1200, 900);
   poop = new SpaceShip();
   for(int i=0 ; i<poops.length ;i++){
     poops[i] = new Star();
@@ -20,7 +20,7 @@ public void setup()
 public void draw() 
 {
   imageMode(CENTER);
-  image(bg,500,500,1920,1000);
+  image(bg,600,450,1920,1000);
   //background(0);
   for(int i=0;i<poops.length;i++){
     poops[i].show();
@@ -43,8 +43,8 @@ public void keyPressed() {
   if (key=='s') down=true;
   if (key=='w') up=true;
   if (key=='h') {
-    poop.setX((int)(Math.random()*1001));
-    poop.setY((int)(Math.random()*1001));
+    poop.setX((int)(Math.random()*1201));
+    poop.setY((int)(Math.random()*951));
     poop.setDirectionX(0);
     poop.setDirectionY(0);
     poop.setPointDirection((int)(Math.random()*361));
@@ -60,8 +60,8 @@ public void keyPressed() {
 class Star {
   private float x,y;
      public Star(){
-        x=(float)Math.random()*1001;
-        y=(float)Math.random()*1001;
+        x=(float)Math.random()*1201;
+        y=(float)Math.random()*951;
     }
 
       public void show(){
@@ -71,20 +71,63 @@ class Star {
 
 class Asteroids extends Floater
 {
-  int rotate;
+  int rotate1;
     public Asteroids(){
       corners=6;
-      int[] xA = {(int)(Math.random()*16)-30,(int)(Math.random()*16)+15,(int)(Math.random()*11)+20,(int)(Math.random()*16)+15,(int)(Math.random()*16)-30,(int)(Math.random()*11)-40};
-      int[] yA = {(int)(Math.random()*16)-30,(int)(Math.random()*16)-30,0,(int)(Math.random()*16)+15,(int)(Math.random()*16)+15,0};
+      // int[] xA = {(int)(Math.random()*16)-30,(int)(Math.random()*16)+15,(int)(Math.random()*11)+20,(int)(Math.random()*16)+15,(int)(Math.random()*16)-30,(int)(Math.random()*11)-40};
+      // int[] yA = {(int)(Math.random()*16)-30,(int)(Math.random()*16)-30,0,(int)(Math.random()*16)+15,(int)(Math.random()*16)+15,0};
+      int[] xA = new int[6];
+      int[] yA = new int[6];
+      int constant = (int)(Math.random()*3);
+      if(constant==2){
+        xA[0]=(int)(Math.random()*16)-40;
+        xA[1]=(int)(Math.random()*16)+25;
+        xA[2]=(int)(Math.random()*11)+30;
+        xA[3]=(int)(Math.random()*16)+25;
+        xA[4]=(int)(Math.random()*16)-40;
+        xA[5]=(int)(Math.random()*11)-50;
+        yA[0]=(int)(Math.random()*16)-40;
+        yA[1]=(int)(Math.random()*16)-40;
+        yA[2]=0;
+        yA[3]=(int)(Math.random()*16)+25;
+        yA[4]=(int)(Math.random()*16)+25;
+        yA[5]=0;
+      } else if(constant==1){
+        xA[0]=(int)(Math.random()*16)-30;
+        xA[1]=(int)(Math.random()*16)+15;
+        xA[2]=(int)(Math.random()*11)+20;
+        xA[3]=(int)(Math.random()*16)+15;
+        xA[4]=(int)(Math.random()*16)-30;
+        xA[5]=(int)(Math.random()*11)-40;
+        yA[0]=(int)(Math.random()*16)-30;
+        yA[1]=(int)(Math.random()*16)-30;
+        yA[2]=0;
+        yA[3]=(int)(Math.random()*16)+15;
+        yA[4]=(int)(Math.random()*16)+15;
+        yA[5]=0;
+      } else {
+        xA[0]=(int)(Math.random()*16)-20;
+        xA[1]=(int)(Math.random()*16)+5;
+        xA[2]=(int)(Math.random()*11)+10;
+        xA[3]=(int)(Math.random()*16)+5;
+        xA[4]=(int)(Math.random()*16)-20;
+        xA[5]=(int)(Math.random()*11)-30;
+        yA[0]=(int)(Math.random()*16)-20;
+        yA[1]=(int)(Math.random()*16)-20;
+        yA[2]=0;
+        yA[3]=(int)(Math.random()*16)+5;
+        yA[4]=(int)(Math.random()*16)+5;
+        yA[5]=0;
+      }
       xCorners = xA;
       yCorners = yA;
       myColor = 135;
-      myCenterX = (double)Math.random()*1001;
-      myCenterY = (double)Math.random()*1001;
+      myCenterX = (double)Math.random()*1201;
+      myCenterY = (double)Math.random()*951;
       myDirectionX = (double)(Math.random()*5)-2;
       myDirectionY = (double)(Math.random()*5)-2;
       myPointDirection= (double)(Math.random()*361);
-      rotate=(int)(Math.random()*11);
+      rotate1=(int)(Math.random()*11);
     }
     public void setX (int x){
       myCenterX=x;
@@ -117,9 +160,26 @@ class Asteroids extends Floater
       return myPointDirection;
     }
     public void move(){
-      rotate(rotate);
+      rotate(rotate1);
       super.move();  
     }
+    public void show ()  //Draws the floater at the current position  
+    {             
+    fill(myColor);   
+    stroke(0);    
+    //convert degrees to radians for sin and cos         
+    double dRadians = myPointDirection*(Math.PI/180);                 
+    int xRotatedTranslated, yRotatedTranslated;    
+    beginShape();         
+    for(int nI = 0; nI < corners; nI++)    
+    {     
+      //rotate and translate the coordinates of the floater using current direction 
+      xRotatedTranslated = (int)((xCorners[nI]* Math.cos(dRadians)) - (yCorners[nI] * Math.sin(dRadians))+myCenterX);     
+      yRotatedTranslated = (int)((xCorners[nI]* Math.sin(dRadians)) + (yCorners[nI] * Math.cos(dRadians))+myCenterY);      
+      vertex(xRotatedTranslated,yRotatedTranslated);    
+    }   
+    endShape(CLOSE);  
+  }   
 }
 
 class SpaceShip extends Floater
