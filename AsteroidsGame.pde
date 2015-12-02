@@ -1,6 +1,6 @@
 SpaceShip poop;
 Star[] poops = new Star[200];
-Asteroids[] pooped = new Asteroids[20];
+ArrayList<Asteroids> pooped = new ArrayList<Asteroids>();
 
 PImage bg;
 boolean up, down, left, right;
@@ -11,8 +11,8 @@ public void setup()
   for(int i=0 ; i<poops.length ;i++){
     poops[i] = new Star();
   }
-  for(int i=0 ; i<pooped.length ; i++){
-    pooped[i] = new Asteroids();
+  for(int i=0 ; i<26 ; i++){
+    pooped.add(i, new Asteroids());
   }
 
   bg = loadImage("Stars1.jpg");
@@ -26,9 +26,12 @@ public void draw()
     poops[i].show();
   }
 
-  for(int i=0 ; i<pooped.length ; i++){
-    pooped[i].move();
-    pooped[i].show();
+  for(int i=0 ; i<pooped.size() ; i++){
+    if(dist(poop.getX(), poop.getY(), pooped.get(i).getX(), pooped.get(i).getY())<40){
+      pooped.remove(i);
+    }
+    pooped.get(i).move();
+    pooped.get(i).show(); 
   }
   if(up==true) poop.accelerate(.3);
   if(down==true) poop.accelerate(-.3);
