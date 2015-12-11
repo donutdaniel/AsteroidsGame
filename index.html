@@ -15,19 +15,6 @@
 				</canvas>
 		    </section>
 	    <footer>
-		    WASD to move, H to enter hyperspace
-
-		    class Bullet extends Floater
-{
-  public Bullet(SpaceShip theShip){
-      myColor = 255;
-      myCenterX = theShip.getX();
-      myCenterY = theShip.getY();
-      myPointDirection= theShip.getPointDirection();
-      double dRadians = myPointDirection*(Math.PI/180);
-      myDirectionX = 5*Math.cos(dRadians) + theShip.getDirectionX();
-      myDirectionY = 5*Math.cos(dRadians) + theShip.getDirectionY();
-  }
-	    </footer>
+		    WASD to move, H to enter hyperspace, SPACE to shoot. </footer>
 	</body>
 </html>

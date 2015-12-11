@@ -13,7 +13,7 @@ public void setup()
   for(int i=0 ; i<poops.length ;i++){
     poops[i] = new Star();
   }
-  for(int i=0 ; i<1 ; i++){
+  for(int i=0 ; i<26 ; i++){
     pooped.add(new Asteroids());
   }
 
@@ -21,9 +21,9 @@ public void setup()
 }
 public void draw() 
 {
-  // imageMode(CENTER);
-  // image(bg,600,450,1920,1000);
-  background(0);
+  imageMode(CENTER);
+  image(bg,600,450,1920,1000);
+  // background(0);
 
   //stars
   for(int i=0;i<poops.length;i++){
@@ -31,14 +31,15 @@ public void draw()
   }
 
 //asteroids commands
+  if(pooped.size()<1){
+    for(int x=0 ; x<26 ; x++){
+        pooped.add(x, new Asteroids());
+    }
+  }
+
   for(int i=0 ; i<pooped.size() ; i++){
     if(dist(poop.getX(), poop.getY(), pooped.get(i).getX(), pooped.get(i).getY())<40){
       pooped.remove(i);
-    }
-    if(pooped.size()<1){
-      for(int x=0 ; x<26 ; x++){
-          pooped.add(new Asteroids());
-      }
     }
     pooped.get(i).move();
     pooped.get(i).show();
@@ -60,6 +61,19 @@ if(shoot==true) pooping.add(new Bullet(poop));
       pooping.get(i).show();
     }
   }
+
+if((pooping.size()>0) && (pooped.size()>0)){
+  for(int i=0; i<pooped.size(); i++){
+    for(int x=0; x<pooping.size(); x++){
+      if(dist(pooping.get(x).getX(), pooping.get(x).getY(), pooped.get(i).getX(), pooped.get(i).getY())<40){
+        pooping.remove(x);
+        pooped.remove(i);
+        break;
+      }
+    }
+  }
+}
+  
 
 }
 public void keyPressed() {
@@ -105,7 +119,7 @@ class Bullet extends Floater
       myPointDirection= theShip.getPointDirection();
       double dRadians = myPointDirection*(Math.PI/180);
       myDirectionX = 5*Math.cos(dRadians) + theShip.getDirectionX();
-      myDirectionY = 5*Math.cos(dRadians) + theShip.getDirectionY();
+      myDirectionY = 5*Math.sin(dRadians) + theShip.getDirectionY();
   }
     public void setX (int x){
       myCenterX=x;
